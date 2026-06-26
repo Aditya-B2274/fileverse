@@ -1,28 +1,21 @@
 # FileVerse
 
-FileVerse is a secure cloud-based document management system featuring real-time collaboration, AES-256-GCM file encryption at rest, granular access permissions, version control, and audit logging.
+FileVerse is a secure cloud-based document management system.
 
-## Setup
+Key features :
+File Upload Simulation.
+Responsive user friendly interface.
+clean and Modern dashboard layout.
 
-1. **Install dependencies**:
-   ```bash
-   npm install
-   ```
+Technology Stack:
+Next.js, Node.js, AWS S3, PostgreSQL
 
-2. **Database setup**:
-   Configure your PostgreSQL connection string (`DATABASE_URL`) in the `.env` file and push the schema:
-   ```bash
-   npx prisma db push
-   ```
+Features:
+Version control & access permissions
+Real-time collaboration
+File encryption & audit logs
+Advanced search & tagging
 
-3. **Run servers**:
-   Start the Next.js development server:
-   ```bash
-   npm run dev
-   ```
-   Start the WebSocket collaboration server in a separate terminal:
-   ```bash
-   npm run ws
-   ```
 
+The Application will run at :
 Open [http://localhost:3000](http://localhost:3000) in your browser to access the application.
