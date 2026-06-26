@@ -1,0 +1,99 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  documents    Document[]   @relation("OwnerRelation")
+  permissions  Permission[]
+  auditLogs    AuditLog[]
+  versions     Version[]
+}
+
+model Document {
+  id           String       @id @default(uuid())
+  title        String
+  description  String?
+  content      String?
+  isFolder     Boolean      @default(false)
+  parentId     String?
+  parent       Document?    @relation("FolderHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children     Document[]   @relation("FolderHierarchy")
+  ownerId      String
+  owner        User         @relation("OwnerRelation", fields: [ownerId], references: [id])
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+  isEncrypted  Boolean      @default(true)
+  encryptionIV String?
+  fileSize     Int          @default(0)
+  mimeType     String       @default("text/plain")
+  
+  permissions  Permission[]
+  versions     Version[]
+  tags         Tag[]        @relation("DocumentTags")
+  auditLogs    AuditLog[]
+  shareLinks   ShareLink[]
+}
+
+model Version {
+  id            String   @id @default(uuid())
+  documentId    String
+  document      Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  versionIndex  Int
+  fileKey       String
+  changeSummary String?
+  createdAt     DateTime @default(now())
+  createdById   String
+  createdBy     User     @relation(fields: [createdById], references: [id])
+}
+
+model Permission {
+  id         String   @id @default(uuid())
+  documentId String
+  document   Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role       String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([documentId, userId])
+}
+
+model Tag {
+  id        String     @id @default(uuid())
+  name      String     @unique
+  documents Document[] @relation("DocumentTags")
+}
+
+model AuditLog {
+  id         String    @id @default(uuid())
+  userId     String?
+  user       User?     @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     String
+  details    String
+  documentId String?
+  document   Document? @relation(fields: [documentId], references: [id], onDelete: SetNull)
+  ipAddress  String?
+  createdAt  DateTime  @default(now())
+}
+
+model ShareLink {
+  id         String    @id @default(uuid())
+  documentId String
+  document   Document  @relation(fields: [documentId], references: [id], onDelete: Cascade)
+  token      String    @unique
+  role       String    @default("VIEWER")
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+}
