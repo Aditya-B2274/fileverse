@@ -11,9 +11,9 @@ Technology Stack:
 Next.js, Node.js, AWS S3, PostgreSQL
 
 Features:
-Version control & access permissions
-Real-time collaboration
-File encryption & audit logs
+Version control & access permissions,
+Real-time collaboration,
+File encryption & audit logs ,
 Advanced search & tagging
 
 
