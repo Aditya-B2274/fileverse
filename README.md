@@ -19,3 +19,9 @@ Advanced search & tagging
 
 The Application will run at :
 Open [http://localhost:3000](http://localhost:3000) in your browser to access the application.
+
+Live Demo link:
+https://fileverse-five.vercel.app/
+
+License:
+This project is developed for educational and internship purposes under Codec Technologies.
