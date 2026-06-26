@@ -14,8 +14,10 @@ Features:
 Version control & access permissions,
 Real-time collaboration,
 File encryption & audit logs ,
-Advanced search & tagging
+Advanced search & tagging.
 
+Installation and Setup :
+Follow the Steps and Run the project locally: "npm run dev"
 
 The Application will run at :
 Open [http://localhost:3000](http://localhost:3000) in your browser to access the application.
